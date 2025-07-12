@@ -1,0 +1,47 @@
+package pizzalator;
+
+public class Logica {
+
+    /**
+     * Calcula el área de un círculo
+     * @param radio Radio del círculo
+     * @return Área del círculo
+     */
+    public static double calcularArea(double radio) {
+        return Math.PI * Math.pow(radio, 2);
+    }
+
+    /**
+     * Esta función calcula el porcetaje (de 0.0 a 1.0) del área del borde respecto a la pizza
+     * @param radio Radio de la pizza
+     * @param anchoBorde Ancho del borde
+     * @return Porcentaje de 0.0 a 1.0 (1.0 es 100%) del borde de la pizza
+     */
+    public static double calcularPorcentajeAreaBorde(double radio, double anchoBorde){
+        double areaTotal, areaBorde, porcentaje;
+
+        areaTotal = calcularArea(radio);
+        areaBorde = calcularDiferenciasAreas(radio, radio-anchoBorde);
+        porcentaje = areaBorde / areaTotal;
+
+        return porcentaje;
+    }
+
+    /**
+     * Calcula la diferencia del área de dos círculos. La función determina el círculo mayor y menor.
+     * @param radio1 Radio del primer círculo
+     * @param radio2 Radio del segundo círculo
+     * @return La diferencia del área.
+     */
+    public static double calcularDiferenciasAreas(double radio1, double radio2) {
+        double area1, area2, diferencia;
+
+        area1 = calcularArea(Math.max(radio1, radio2));
+        area2 = calcularArea(Math.min(radio1, radio2));
+        diferencia = area1 - area2;
+
+        return diferencia;
+    }
+
+
+}
