@@ -8,7 +8,7 @@ public class Logica {
         double porcentajeBorde = 0, precioRelleno = 0, precioBorde, precioTajadaRelleno = 0, precioTajadaBorde = 0;
         porcentajeBorde = calcularPorcentajeAreaBorde(tamaño / 2, anchoBorde);
         salida = String.format("%-20s %-6s %-8s", "Nombre", "Tamaño", "Precio");
-        salida = String.format("%-20s %5.2f\"  %8.2f", nombre, tamaño, precio);
+        salida = String.format("%-20s %5.2f\" \u20A1%8.2f", nombre, tamaño, precio);
         return salida;
     }
 
