@@ -1,25 +1,23 @@
 package pizzalator;
 
 public class Datos {
-    private static String[] historial = new String[100];  // Arreglo fijo
-    private static int contador = 0;  // Lleva la cuenta de operaciones guardadas
-    
-    // Guarda una operación en el arreglo
-    public static void guardarOperacion(String operacion) {
-        if (contador < historial.length) {
-            historial[contador] = operacion;
-            contador++;
-        } else {
-            System.out.println("Historial lleno. No se guardó la operación.");
+    private static StringBuilder datos = new StringBuilder();
+
+    public static void limpiarDatos() {
+        if (datos.length() > 0) {
+            datos.delete(0, datos.length() - 1);
         }
+
     }
-    
-    // Devuelve el historial como un solo String
-    public static String obtenerHistorial() {
-        String resultado = "\n--- Historial de Operaciones ---\n";
-        for (int i = 0; i < contador; i++) {
-            resultado += historial[i] + "\n";
+
+    public static void guardarDatos(String dato) {
+        if (datos.length() > 0) {
+            datos.append("\n");
         }
-        return resultado + "-----------------------------";
+        datos.append(dato);
+    }
+
+    public static String obtenerHistorial() {
+        return datos.toString();
     }
 }

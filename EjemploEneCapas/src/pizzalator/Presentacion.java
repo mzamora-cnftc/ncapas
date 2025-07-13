@@ -1,86 +1,84 @@
 package pizzalator;
 
-import java.util.Scanner;
-
 import utilitarios.Utils;
 
 public class Presentacion {
-    
+
     public static void main(String[] args) {
         int opcionPrincipal;
         do {
             mostrarMenuPrincipal();
             opcionPrincipal = Utils.leerEntero("Digite su opción: ");
-            
+
             switch (opcionPrincipal) {
                 case 1:
-                    manejarOperaciones();
+                    registrarPizza();
                     break;
                 case 2:
-                    System.out.println(Datos.obtenerHistorial());
+                    mostrarHistorial();
                     break;
                 case 3:
+                    eliminarHistorial();
+                    break;
+                case 0:
                     System.out.println("¡Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción inválida.");
             }
-        } while (opcionPrincipal != 3);
-        
+        } while (opcionPrincipal != 0);
 
     }
-    
+
     // Muestra el menú principal
     public static void mostrarMenuPrincipal() {
         Utils.limpiarConsola();
-        System.out.println("\n** Menú Principal **");
-        System.out.println(String.format("%2d - %20s", 1, "Realizar Operación"));
-        System.out.println("2. Ver historial");
-        System.out.println("3. Salir");
+        System.out.println("\n** Menú Principal **".toUpperCase());
+        System.out.println(String.format("%2d - %-20s", 1, "Registrar pizza"));
+        System.out.println(String.format("%2d - %-20s", 2, "Ver historial"));
+        System.out.println(String.format("%2d - %-20s", 3, "Limpiar datos"));
+        System.out.println(String.format("%2d - %-20s", 0, "Salir"));
         System.out.print("Elija una opción (1-3): ");
     }
-    
-    // Maneja el submenú de operaciones
-    public static void manejarOperaciones() {
-        double[] numeros = leerNumeros();
-        System.out.println("\n** Operaciones Disponibles **");
-        System.out.println("1. Sumar");
-        System.out.println("2. Restar");
-        System.out.println("3. Multiplicar");
-        System.out.println("4. Dividir");
-        System.out.print("Elija una opción (1-4): ");
-        
-        int opcion = Utils.leerEntero("Digite su opción: ");
-        String resultado = "";
-        
-        switch (opcion) {
-            case 1:
-                //resultado = Logica.sumar(numeros[0], numeros[1]);
-                break;
-            case 2:
-                //resultado = Logica.restar(numeros[0], numeros[1]);
-                break;
-            case 3:
-                //resultado = Logica.multiplicar(numeros[0], numeros[1]);
-                break;
-            case 4:
-                //resultado = Logica.dividir(numeros[0], numeros[1]);
-                break;
-            default:
-                resultado = "Opción inválida";
+
+    public static void registrarPizza() {
+
+        String nombre;
+        double tamaño, anchoBorde, precio; 
+        int numeroTajadas;
+        Utils.limpiarConsola();
+        System.out.println("\n** Menú Principal **".toUpperCase());
+        nombre = Utils.leerString("Digite el nombre la pizza: ");
+        tamaño = Utils.leerDoble("Digite el tamaño en pulgadas de diametro: ");
+        anchoBorde = Utils.leerDoble("Digite el ancho del borde en pulgadas: ");
+        precio = Utils.leerDoble("Digite el precio: ");
+        numeroTajadas = Utils.leerEntero("Digite la cantidad de tajadas: ");
+        String resultado = Logica.procesarInfoPizza(nombre, tamaño, anchoBorde, precio, numeroTajadas);
+        Utils.limpiarConsola();
+        System.out.println("\n** Resultados **".toUpperCase());
+        System.out.println(resultado);
+        Datos.guardarDatos(resultado);
+        Utils.pausar();
+    }
+
+    public static void mostrarHistorial() {
+        Utils.limpiarConsola();
+        System.out.println("\n** Ver historial **".toUpperCase());
+        System.out.println(Datos.obtenerHistorial());
+        Utils.pausar();
+    }
+
+    public static void eliminarHistorial() {
+        Utils.limpiarConsola();
+        boolean condicion;
+        condicion = Utils.leerBoolean("Desea eliminar los datos registrados");
+        if (condicion) {
+            Datos.limpiarDatos();
+            System.out.println("Datos elminados");
+        } else {
+            System.out.println("No se han elimnado los datos");
         }
-        
-        System.out.println("Resultado: " + resultado);
-        Datos.guardarOperacion(resultado);  // Guarda en el arreglo
+        Utils.pausar();
     }
-    
-    // Lee los dos números (reutilizado del ejemplo anterior)
-    public static double[] leerNumeros() {
-        double[] numeros = new double[2];
-        System.out.print("Ingrese el primer número: ");
-        numeros[0] = Utils.leerEntero("Digite su opción: ");
-        System.out.print("Ingrese el segundo número: ");
-        numeros[1] = Utils.leerEntero("Digite su opción: ");
-        return numeros;
-    }
+
 }
