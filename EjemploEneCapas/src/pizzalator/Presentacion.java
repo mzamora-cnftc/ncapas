@@ -38,14 +38,15 @@ public class Presentacion {
         System.out.println(String.format("%2d - %-20s", 2, "Ver historial"));
         System.out.println(String.format("%2d - %-20s", 3, "Limpiar datos"));
         System.out.println(String.format("%2d - %-20s", 0, "Salir"));
-        System.out.print("Elija una opción (1-3): ");
+        System.out.print("Elija una opción (0-3): ");
     }
 
     public static void registrarPizza() {
 
-        String nombre;
-        double tamaño, anchoBorde, precio; 
-        int numeroTajadas;
+        String nombre = null, resultado = null;
+        double tamaño = 0, anchoBorde = 0, precio = 0; 
+        int numeroTajadas = 0;
+        boolean pregunta = false;
         Utils.limpiarConsola();
         System.out.println("\n** Menú Principal **".toUpperCase());
         nombre = Utils.leerString("Digite el nombre la pizza: ");
@@ -53,17 +54,32 @@ public class Presentacion {
         anchoBorde = Utils.leerDoble("Digite el ancho del borde en pulgadas: ");
         precio = Utils.leerDoble("Digite el precio: ");
         numeroTajadas = Utils.leerEntero("Digite la cantidad de tajadas: ");
-        String resultado = Logica.procesarInfoPizza(nombre, tamaño, anchoBorde, precio, numeroTajadas);
+        
         Utils.limpiarConsola();
-        System.out.println("\n** Resultados **".toUpperCase());
-        System.out.println(resultado);
-        Datos.guardarDatos(resultado);
+        System.out.printf("%-20s : %-25s\n", "Nombre de la Pizza", nombre);
+        System.out.printf("%-20s : %25.2f\n","Diametro (pulgadas)", tamaño);
+        System.out.printf("%-20s : %25.2f\n","Borde (pulgadas)", anchoBorde);
+        System.out.printf("%-20s : %25.2f\n","Precio (colones)", precio);
+        System.out.printf("%-20s : %25d\n","Tajadas (unidades)", numeroTajadas);
+
+        pregunta = Utils.leerBoolean("Son correctos los datos");
+        if (pregunta) {
+            resultado = Logica.procesarInfoPizza(nombre, tamaño, anchoBorde, precio, numeroTajadas);
+            System.out.println("\n** Resultados registrados**".toUpperCase());
+            System.out.println(Logica.obtenerEncabezadoInfoPizza());
+            System.out.println(resultado);
+            Datos.guardarDatos(resultado);
+        } else {
+            System.out.println("No se registrarán los datos");
+        }
+
         Utils.pausar();
     }
 
     public static void mostrarHistorial() {
         Utils.limpiarConsola();
         System.out.println("\n** Ver historial **".toUpperCase());
+        System.out.println(Logica.obtenerEncabezadoInfoPizza());
         System.out.println(Datos.obtenerHistorial());
         Utils.pausar();
     }

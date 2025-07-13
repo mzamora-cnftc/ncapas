@@ -13,7 +13,7 @@ public class Datos {
     public static void guardarDatos(String dato) {
         if (datos.length() > 0) {
             datos.append("\n");
-        }
+        } 
         datos.append(dato);
     }
 

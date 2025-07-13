@@ -2,13 +2,24 @@ package pizzalator;
 
 public class Logica {
 
+    public static String obtenerEncabezadoInfoPizza() {
+        return String.format("%-20s %-6s  %-9s %-8s  %-8s %-7s %-8s %-7s %-7s",
+                "Nombre", "Tamaño", "Precio", "Borde", "% Borde", "Pulg.\u00B2", "\u20A1/Pulg.\u00B2", "Tajadas",
+                "\u20A1/Taj.");
+    }
+
     public static String procesarInfoPizza(String nombre, double tamaño, double anchoBorde, double precio,
             double numeroTajadas) {
         String salida = null;
-        double porcentajeBorde = 0, precioRelleno = 0, precioBorde, precioTajadaRelleno = 0, precioTajadaBorde = 0;
+        double porcentajeBorde = 0, area = 0, ratio = 0, precioTajada;
         porcentajeBorde = calcularPorcentajeAreaBorde(tamaño / 2, anchoBorde);
-        salida = String.format("%-20s %-6s %-8s", "Nombre", "Tamaño", "Precio");
-        salida = String.format("%-20s %5.2f\" \u20A1%8.2f", nombre, tamaño, precio);
+        area = calcularArea(tamaño / 2);
+        ratio = precio / area;
+        precioTajada = precio / numeroTajadas;
+
+        salida = String.format("%-20s %6.2f\" \u20A1%08.2f %7.2f\" %8.2f%% %7.2f %7.2f %7.2f %7.2f",
+                nombre, tamaño, precio, anchoBorde,
+                porcentajeBorde * 100, area, ratio, numeroTajadas, precioTajada);
         return salida;
     }
 
