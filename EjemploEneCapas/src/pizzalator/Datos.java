@@ -23,7 +23,7 @@ public class Datos {
      */
     public static void limpiarDatos() {
         if (datos.length() > 0) {
-            datos.delete(0, datos.length() - 1);
+            datos.delete(0, datos.length());
         }
     }
 
